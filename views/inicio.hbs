@@ -1,0 +1,60 @@
+<div class="container text-center -5">
+  <hr />
+  <h1>
+    {{titulo}}
+    a Menu
+    <i>Click</i>
+  </h1>
+  <hr />
+</div>
+
+<div class="container text-center -5">
+  <h2>
+    Qué te gustaria comer hoy
+  </h2>
+
+<div class="container text-center">
+  <h4>
+    Antes por favor ingresa tus datos para elaborar tu pedido.
+  </h4>
+</div>
+
+<div class="container">
+    <form action="/inicio" method="post">
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label"></label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required
+            placeholder="Nombre"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label"></label>
+            <input type="email" class="form-control" id="email" name="email" required
+            placeholder="Email"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="phone" class="form-label"></label>
+            <input type="number" class="form-control" id="phone" name="phone" required
+            placeholder="Número Celular"/>
+        </div>
+
+        <div class="mb-3 text-center">
+            <button type="submit" class="btn bg-success p-2 bg-opacity-25 w-50 ">Enviar</button>
+        </div>
+
+      <div class="mb-10">
+        <h4>
+          Selecciona tu opción de servicio
+        </h4>
+      </div>
+
+    <div class="mb-5 d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary" type="button">Button</button>
+        <button class="btn btn-primary" type="button">Button</button>
+    </div>
+    
+        </form>
+    </div>
+
