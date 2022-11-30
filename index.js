@@ -40,6 +40,12 @@ conexion.connect((err) => {
 });
 
 //rutas de la aplicacion
+app.get("/", (req, res) => {
+  res.render("index", {
+    titulo: "¡¡Bienvenidos!!",
+  });
+});
+
 app.get("/inicio", (req, res) => {
   res.render("inicio", {
     titulo: "¡¡Bienvenidos!!",
@@ -104,12 +110,3 @@ app.listen(PORT, () => {
 
 //para imprimir
 //console.log(process.env.DATABASE);
-
-
-
-
-
-
-
-
-
