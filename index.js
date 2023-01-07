@@ -7,6 +7,7 @@ const hbs = require("hbs");
 const path = require("path");
 //para enviar mails
 const nodemailer = require("nodemailer");
+const { Console } = require("console");
 //variables de entorno
 require("dotenv").config();
 
@@ -40,50 +41,105 @@ conexion.connect((err) => {
 });
 
 //rutas de la aplicacion
-app.get("/", (req, res) => {
-  res.render("index", {
-    titulo: "¡¡Bienvenidos!!",
+app.get('/', (req, res) => {
+  res.render('index', {
+    titulo: '¡¡Bienvenidos!!',
   });
 });
 
-app.get("/inicio", (req, res) => {
-  res.render("inicio", {
-    titulo: "¡¡Bienvenidos!!",
+
+app.get('/menus', (req, res) => {
+  let sql = "SELECT * FROM productos";
+  conexion.query(sql, function(err, result){
+    if (err) throw err;
+    console.log(result);
+    res.render('menus', {
+        titulo: '¡¡Bienvenidos!!',
+        datos: result
+      })
+  })
+})
+
+
+app.get('/pedidos', (req, res) => {
+  res.render('/pedidos', {
+    titulo: 'pedidos',
   });
 });
 
-app.get("/carnes", (req, res) => {
-  res.render("carnes", {
-    titulo: "Carnes",
-  });
+app.get('/ensaladas', (req, res) => {
+  res.render('ensaladas', {
+    titulo: 'ensaladas',
+  })
 });
 
-app.get("/ensaladas", (req, res) => {
-  res.render("ensaladas", {
-    titulo: "ensaladas",
-  });
-});
-
-app.get("/guarniciones", (req, res) => {
-    res.render("guarniciones", {
-      titulo: "guarnicioness",
+app.get('/guarniciones', (req, res) => {
+    res.render('guarniciones', {
+      titulo: 'guarnicioness',
     });
   });
 
-app.get("/postres", (req, res) => {
-  res.render("postres", {
-    titulo: "postres",
+app.get('/postres', (req, res) => {
+  res.render('postres', {
+    titulo: 'postres',
   });
 });
 
-app.post("/inicio", (req, res) => {
+app.post('/menus', (req, res) =>{
+
+  //console.log(req);
+
+  const Menu = req.body.Menu;
+  const precio = req.body.precio;
+    
+  //const cantidad = 1
+let datos = {
+    Menu: Menu,
+    precio: precio,
+    }
+
+  let sql = "INSERT INTO productos set ?"; 
+  
+  conexion.query(sql, datos, function(err){
+    if (err) throw err;
+    console.log(`1 Registro insertado`);
+    res.render('menus')
+    })  
+})
+
+//creación de post de datos de clientes y envio de email
+app.post("/index", (req, res) => {
   const nombre = req.body.nombre;
   const email = req.body.email;
   const phone = req.body.phone;
 
   //creamos una funcion para enviar Email al cliente
+  async function envioMail(){
+    //configuramos la cuenta del envio
+    let transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAILPASSWORD
+      }
+    });
 
-//async function EnvioMail
+    //Envio del mail
+    let info = await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: `${email}`,
+      subject: "Gracias por elegirnos y vive la experiencia MenuClick",
+      html: `Muchas gracias por elegirnos. <br>
+      Estaremos enviando promociones y menus de nuestras comidas a esta dirección de correo. <br>
+      Si necesitas más información de nuestros menus, con gusto te atenderemos.<br>
+      Que tengas una buena semana.<br>
+      Saludos,<br>
+      Equipo MenuClick<br>`
+    })
+
+  }
 
   let datos = {
     nombre: nombre,
@@ -96,9 +152,11 @@ app.post("/inicio", (req, res) => {
   conexion.query(sql, datos, function(err){
     if(err) throw err;
     console.log(`1 Registro insertado`);
-    res. render('inicio')
+    //Email
+    envioMail().catch(console.error);
+    res. render('menus')
   })
- 
+
 })
 
 //servidor a la escucha de las peticiones
@@ -106,7 +164,9 @@ app.listen(PORT, () => {
   console.log(`Servidor trabajando en el puerto: ${PORT}`);
 });
 
-
-
 //para imprimir
 //console.log(process.env.DATABASE);
+
+
+
+

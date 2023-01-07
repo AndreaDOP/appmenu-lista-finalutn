@@ -1,0 +1,88 @@
+<div class="container text-center -5">
+<style>
+    .fondo-pantalla{
+        background-image: url("img/fondo-pedidos.png");
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+</style>
+</div>
+
+<div class="fondo-pantalla">
+<div class="container text-center -5">
+    <hr>
+    <h1>
+        Pedidos <br> Menu Click
+    </h1>
+    <h4>
+    <br>
+        Selecciona que Menú vas a pedir
+    </h4>
+</div>
+
+<div class="container text-center">
+
+    <form action="/pedidos" method="post">
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Selecciona tu Menú</option>
+            <option value="1">Bondila $2.100</option>
+            <option value="2">Suprema $1.800</option>
+            <option value="3">Ensalada Rubí $990</option>
+            <option value="3">Ensalada Salmón $2.100</option>
+            <option value="3">Champiñones Rellenos $1.500</option>
+            <option value="3">Ravioles $1.990</option>
+            <option value="3">Guiso $2.000</option>
+            <option value="3">Wok $1.800</option>
+        </select>
+        <br>
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Cantidad</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="3">4</option>
+            <option value="3">5</option>
+            <option value="3">6</option>
+        </select>
+        <br>
+        <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">Default checkbox</label>
+        </div>
+
+
+<div class="mb-3">
+    <label for="nombre" class="form-label"></label>
+    <input type="text" class="form-control" id="nombre" name="nombre" required placeholder="Nombre"/>
+</div>
+
+</form>
+</div>
+
+<br>
+<br>
+
+<div class="container text-center">
+    <table class="table table-striped" id="mitabla">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Bondiola</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each datos}}
+            <tr>
+                <th scope="row">{{ idMenus }}</th>
+                <td>{{ nombre }}</td>
+                <td>{{ precio }}</td>
+                <td>{{ idUsuarios }}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+</div>
